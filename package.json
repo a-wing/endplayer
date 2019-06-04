@@ -1,0 +1,22 @@
+{
+  "name": "Endplayer",
+  "version": "0.1.0",
+  "description": "Electron N Danmaku Player",
+  "main": "main.js",
+  "author": "a-wing <1@233.email>",
+  "license": "GPL-3.0",
+  "scripts": {
+    "use-system-ffmpeg": "gcc -Wl,--no-as-needed -shared -lavformat -o node_modules/electron/dist/libffmpeg.so",
+    "start": "npx electron ."
+  },
+  "devDependencies": {
+    "electron": "^4.1.5"
+  },
+  "dependencies": {
+    "babel-standalone": "^6.26.0",
+    "danmaku": "^1.3.5",
+    "mpv.js": "^0.3.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
+}
