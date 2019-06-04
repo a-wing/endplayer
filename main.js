@@ -1,8 +1,11 @@
+// Create at: 2019.06.04
+// Remember that my internet is broken this day.
+
+
 "use strict";
 
 const path = require("path");
 const { BrowserWindow, app } = require("electron");
-//const {getPluginEntry} = require("../index");
 const { getPluginEntry } = require("mpv.js");
 //require("electron-debug")({showDevTools: false});
 

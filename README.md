@@ -5,6 +5,19 @@ Endplayer
 
 ![Endplayer](screenshot/endplayer.png)
 
+> Use Electron, React, mpv, danmaku player
+
+## Todo
+- [ ] Plugin System
+  - [ ] Plugin: Auto Search danmaku
+  - [ ] Plugin: Bilibili danmaku
+  - [ ] Plugin: DandanPlayer API
+  - [ ] Plugin: Send Danmaku
+- [ ] Play List
+- [ ] Danmaku Filter
+
+## Depends
+- mpv
 
 ## Build
 ```
@@ -27,5 +40,9 @@ Or
 
 https://api.bilibili.com/x/v1/dm/list.so?oid= + (cid)
 https://api.bilibili.com/x/v1/dm/list.so?oid=87404714
-
 ```
+
+## Acknowledgement
+- [Kagami/mpv.js](https://github.com/Kagami/mpv.js)
+- [weizhenye/Danmaku](https://github.com/weizhenye/Danmaku)
+
