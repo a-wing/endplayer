@@ -32,6 +32,9 @@ class Main extends React.PureComponent {
     this.handleDanmakuLoad = this.handleDanmakuLoad.bind(this);
     this.danmakuLoad = this.danmakuLoad.bind(this);
     this.loadLocalFile = this.loadLocalFile.bind(this);
+    this.handleMouse = this.handleMouse.bind(this);
+    this.state = { cursor: 'none' };
+    this.timer = null;
   }
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyDown, false);
@@ -49,6 +52,12 @@ class Main extends React.PureComponent {
     //  console.log(file)
     //  return file
     //})
+  }
+  handleMouse() {
+    this.setState({ cursor: '' })
+
+    window.clearTimeout(this.timer);
+    this.timer = window.setTimeout(() => { this.setState({ cursor: 'none' }); }, 3000)
   }
   danmakuLoad(file) {
     var danmaku = new Danmaku();
@@ -150,7 +159,7 @@ class Main extends React.PureComponent {
   }
   render() {
     return (
-      <div className="container">
+      <div className="container" style={{ cursor: this.state.cursor }} onMouseMove={ this.handleMouse }>
         <div id="danmaku"></div>
         <ReactMPV
           className="player"
