@@ -109,7 +109,7 @@ class Main extends React.PureComponent {
     if (this.state.fullscreen) {
       document.webkitExitFullscreen();
     } else {
-      this.mpv.fullscreen();
+      document.getElementById("main").webkitRequestFullScreen();
     }
     this.setState({fullscreen: !this.state.fullscreen});
   }
@@ -187,6 +187,7 @@ class Main extends React.PureComponent {
           />
           <button className="control" onClick={this.handleLoad}>⏏</button>
           <button className="control" onClick={this.handleDanmakuLoad}>弹</button>
+          <button className="control" onClick={this.toggleFullscreen}>{ this.state.fullscreen ? "Esc" : "Full" }</button>
         </div>
       </div>
     );
