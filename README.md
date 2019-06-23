@@ -11,7 +11,7 @@ Endplayer
 - [ ] Plugin System
   - [ ] Plugin: Auto Search danmaku
   - [ ] Plugin: Bilibili danmaku
-  - [ ] Plugin: DandanPlayer API
+  - [x] Plugin: DandanPlayer API
   - [ ] Plugin: Send Danmaku
 - [ ] Play List
 - [ ] Danmaku Filter

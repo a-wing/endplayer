@@ -9,6 +9,8 @@ const { ReactMPV } = require("mpv.js");
 // danmaku
 const Danmaku = require('danmaku')
 const BilibiliParser = require('./src/bilibili')
+const ACPlayer = require('./src/acplayer')
+
 console.log(BilibiliParser)
 
 class Main extends React.PureComponent {
@@ -59,11 +61,17 @@ class Main extends React.PureComponent {
     window.clearTimeout(this.timer);
     this.timer = window.setTimeout(() => { this.setState({ cursor: 'none' }); }, 3000)
   }
-  danmakuLoad(file) {
-    var danmaku = new Danmaku();
+  //danmakuLoad(file) {
+  //  var danmaku = new Danmaku();
 
-    var comments = BilibiliParser(this.loadLocalFile(file));
-    //console.log(comments)
+  //  var comments = BilibiliParser(this.loadLocalFile(file));
+
+
+  danmakuLoad(file) {
+
+    var danmaku = new Danmaku();
+    var comments = file;
+    console.log(comments)
     danmaku.init({
       container: document.getElementById('danmaku'),
       comments: []
@@ -154,6 +162,20 @@ class Main extends React.PureComponent {
       {name: "All files", extensions: ["*"]},
     ]});
     if (items) {
+
+      console.log(items[0])
+
+      const filepath = items[0];
+      ACPlayer.search(filepath, (ok, matches) => {
+        console.log(matches)
+        ACPlayer.getComments(matches[0].episodeId, (comments) => {
+          //console.log(comments)
+          //console.log(acplayerParser(row));
+          //console.log(ACPlayer.acplayerParser(comments));
+          this.danmakuLoad(ACPlayer.acplayerParser(comments));
+        });
+      });
+
       this.mpv.command("loadfile", items[0]);
     }
   }
