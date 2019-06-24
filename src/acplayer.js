@@ -185,7 +185,7 @@ function acplayerParser(row) {
       text: d.m,
       html: false,
       mode: modeMap[d.p.split(',')[1]],
-      time: d.p.split(',')[0],
+      time: Number(d.p.split(',')[0]),
       style: {
         fontSize: '20px',
         color: `#${Number(d.p.split(',')[2]).toString(16)}`,
