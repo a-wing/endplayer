@@ -61,12 +61,9 @@ class Main extends React.PureComponent {
     window.clearTimeout(this.timer);
     this.timer = window.setTimeout(() => { this.setState({ cursor: 'none' }); }, 3000)
   }
-  //danmakuLoad(file) {
-  //  var danmaku = new Danmaku();
-
-  //  var comments = BilibiliParser(this.loadLocalFile(file));
-
-
+  bilibiliDanmakuLoad(file) {
+    this.danmakuLoad(BilibiliParser(this.loadLocalFile(file)));
+  }
   danmakuLoad(file) {
 
     var danmaku = new Danmaku();
@@ -152,7 +149,7 @@ class Main extends React.PureComponent {
     ]});
 
     if (items) {
-      this.danmakuLoad(items[0]);
+      this.bilibiliDanmakuLoad(items[0]);
     }
   }
   handleLoad(e) {
