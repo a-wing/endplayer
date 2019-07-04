@@ -108,7 +108,11 @@ function match(postData, callback) {
 * @returns {callback<typeof string>}
 */
 function getComments(id, callback) {
-  https.get(`https://api.acplay.net/api/v2/comment/${id}?withRelated=false`, (res) => {
+  httpGet(`https://api.acplay.net/api/v2/comment/${id}?withRelated=false`, callback)
+}
+
+function httpGet(url, callback) {
+  https.get(url, (res) => {
     console.log('statusCode:', res.statusCode);
     console.log('headers:', res.headers);
     data = '';
@@ -117,8 +121,15 @@ function getComments(id, callback) {
       //process.stdout.write(d);
       data = data + d
     });
+    console.log(url);
     res.on('end', () => {
       console.log('No more data in response.');
+      console.log(res);
+      console.log(res.headers);
+      if (res.statusCode == 302 || res.statusCode == 302) {
+        console.log("301 || 302");
+        return httpGet(res.headers.location, callback);
+      }
       callback(data);
     });
 
