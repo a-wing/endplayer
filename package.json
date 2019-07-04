@@ -1,19 +1,26 @@
 {
   "name": "Endplayer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Electron N Danmaku Player",
   "main": "main.js",
   "author": "a-wing <1@233.email>",
   "license": "GPL-3.0",
   "scripts": {
     "use-system-ffmpeg": "gcc -Wl,--no-as-needed -shared -lavformat -o node_modules/electron/dist/libffmpeg.so",
-    "start": "npx electron ."
+    "start": "npx electron .",
+    "build": "webpack --mode production --config webpack.config.renderer.js",
+    "dev": "webpack --mode development"
   },
   "devDependencies": {
-    "electron": "^4.1.5"
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "electron": "^4.1.5",
+    "webpack": "^5.0.0-alpha.17",
+    "webpack-cli": "^3.3.5"
   },
   "dependencies": {
-    "babel-standalone": "^6.26.0",
     "danmaku": "^1.3.5",
     "mpv.js": "^0.3.0",
     "react": "^16.8.6",

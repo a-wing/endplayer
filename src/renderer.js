@@ -7,9 +7,9 @@ const { remote } = require("electron");
 const { ReactMPV } = require("mpv.js");
 
 // danmaku
-const Danmaku = require('danmaku')
-const BilibiliParser = require('./src/bilibili')
-const ACPlayer = require('./src/acplayer')
+import Danmaku from "danmaku";
+const BilibiliParser = require('./plugins/bilibili')
+const ACPlayer = require('./plugins/acplayer')
 
 console.log(BilibiliParser)
 
@@ -65,7 +65,6 @@ class Main extends React.PureComponent {
     this.danmakuLoad(BilibiliParser(this.loadLocalFile(file)));
   }
   danmakuLoad(file) {
-
     var danmaku = new Danmaku();
     var comments = file;
     console.log(comments)
