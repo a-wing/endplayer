@@ -31,6 +31,7 @@ class Main extends React.PureComponent {
 
     // danmaku
     this.danmaku = null;
+    this.onWindowResize = this.onWindowResize.bind(this);
     this.handleDanmakuLoad = this.handleDanmakuLoad.bind(this);
     this.danmakuLoad = this.danmakuLoad.bind(this);
     this.loadLocalFile = this.loadLocalFile.bind(this);
@@ -40,9 +41,14 @@ class Main extends React.PureComponent {
   }
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyDown, false);
+    window.addEventListener('resize', this.onWindowResize)
   }
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyDown, false);
+    window.removeEventListener('resize', this.onWindowResize)
+  }
+  onWindowResize() {
+    this.danmaku === null ? null : this.danmaku.resize();
   }
   loadLocalFile(filepath) {
     const fs = require('fs')
@@ -84,6 +90,7 @@ class Main extends React.PureComponent {
       result.map(r => danmaku.emit(r));
 
     }, 1000);
+    this.danmaku = danmaku
   }
   handleKeyDown(e) {
     e.preventDefault();
