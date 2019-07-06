@@ -166,9 +166,7 @@ class Main extends React.PureComponent {
         console.log(matches)
         ACPlayer.getComments(matches[0].episodeId, (comments) => {
           //console.log(comments)
-          //console.log(acplayerParser(row));
-          //console.log(ACPlayer.acplayerParser(comments));
-          this.danmakuLoad(ACPlayer.acplayerParser(comments));
+          this.danmakuLoad(ACPlayer.Parser(comments));
         });
       });
 

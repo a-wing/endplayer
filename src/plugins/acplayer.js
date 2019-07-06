@@ -183,7 +183,7 @@ row = `{
 }`
 
 
-function acplayerParser(row) {
+function Parser(row) {
   modeMap = {
     1: 'rtl',
     4: 'bottom',
@@ -200,7 +200,7 @@ function acplayerParser(row) {
       style: {
         fontSize: '20px',
         color: `#${Number(d.p.split(',')[2]).toString(16)}`,
-        border: '1px solid #337ab7',
+        border: '',
         textShadow: '-1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000'
       }
     }
@@ -212,6 +212,6 @@ function acplayerParser(row) {
 module.exports = {
   search,
   getComments,
-  acplayerParser
+  Parser
 }
 
