@@ -9,13 +9,15 @@
     "use-system-ffmpeg": "gcc -Wl,--no-as-needed -shared -lavformat -o node_modules/electron/dist/libffmpeg.so",
     "start": "npx electron .",
     "build": "webpack --mode production --config webpack.config.renderer.js",
-    "dev": "webpack --mode development"
+    "dev-renderer": "webpack --watch --mode development --config webpack.config.renderer.js",
+    "dev": "concurrently --kill-others 'npm run dev-renderer' 'npm run start'"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
+    "concurrently": "^4.1.1",
     "electron": "^4.1.5",
     "webpack": "^5.0.0-alpha.17",
     "webpack-cli": "^3.3.5"
