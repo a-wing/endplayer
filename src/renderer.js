@@ -48,7 +48,8 @@ class Main extends React.PureComponent {
     window.removeEventListener('resize', this.onWindowResize)
   }
   onWindowResize() {
-    this.danmaku === null ? null : this.danmaku.resize();
+    //this.danmaku.engine === null ? null : this.danmaku.engine['resize']();
+    this.danmaku === null ? null : this.danmaku.engine.resize();
   }
   loadLocalFile(filepath) {
     const fs = require('fs')
@@ -72,6 +73,7 @@ class Main extends React.PureComponent {
   }
   danmakuLoad(file) {
     var danmaku = new Danmaku();
+    this.pool = file;
     var comments = file;
     console.log(comments)
     danmaku.init({
@@ -79,7 +81,7 @@ class Main extends React.PureComponent {
       comments: []
     });
 
-    setInterval(() => {
+    let dispatcher = setInterval(() => {
       var t = document.getElementById("progress").value
       const result = comments.filter(word => word.time < t);
 
@@ -90,7 +92,7 @@ class Main extends React.PureComponent {
       result.map(r => danmaku.emit(r));
 
     }, 1000);
-    this.danmaku = danmaku
+    this.danmaku = { engine: danmaku, pool: file, dispatcher: dispatcher }
   }
   handleKeyDown(e) {
     e.preventDefault();
@@ -140,6 +142,29 @@ class Main extends React.PureComponent {
   }
   handleSeek(e) {
     e.target.blur();
+
+    // danmaku
+    clearInterval(this.danmaku.dispatcher)
+
+    let danmaku = this.danmaku.engine
+
+    var t = document.getElementById("progress").value
+    let comments = this.danmaku.pool.filter(word => word.time >= t)
+    console.log(comments)
+
+    this.danmaku.dispatcher = setInterval(() => {
+      var t = document.getElementById("progress").value
+      const result = comments.filter(word => word.time < t);
+
+      // 差集 （减去发送的弹幕）
+      comments = comments.filter(v => result.indexOf(v) == -1 )
+
+      //console.log(result)
+      result.map(r => danmaku.emit(r));
+
+    }, 1000);
+    ///////////////
+
     const timePos = +e.target.value;
     this.setState({"time-pos": timePos});
     this.mpv.property("time-pos", timePos);
