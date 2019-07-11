@@ -8,8 +8,10 @@ const { ReactMPV } = require("mpv.js");
 
 // danmaku
 import Danmaku from "danmaku";
+
+import DanmakuDOM from "./engines/danmaku_dom";
+
 const BilibiliParser = require('./plugins/bilibili')
-const ACPlayer = require('./plugins/acplayer')
 
 console.log(BilibiliParser)
 
@@ -29,11 +31,12 @@ class Main extends React.PureComponent {
     this.handleSeekMouseUp = this.handleSeekMouseUp.bind(this);
     this.handleLoad = this.handleLoad.bind(this);
 
+
+    this.engines = [];
     // danmaku
     this.danmaku = null;
     this.onWindowResize = this.onWindowResize.bind(this);
     this.handleDanmakuLoad = this.handleDanmakuLoad.bind(this);
-    this.danmakuLoad = this.danmakuLoad.bind(this);
     this.loadLocalFile = this.loadLocalFile.bind(this);
     this.handleMouse = this.handleMouse.bind(this);
     this.state = { cursor: 'none' };
@@ -42,14 +45,14 @@ class Main extends React.PureComponent {
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyDown, false);
     window.addEventListener('resize', this.onWindowResize)
+
   }
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyDown, false);
     window.removeEventListener('resize', this.onWindowResize)
   }
   onWindowResize() {
-    //this.danmaku.engine === null ? null : this.danmaku.engine['resize']();
-    this.danmaku === null ? null : this.danmaku.engine.resize();
+    this.engines.map(engine => engine.resize())
   }
   loadLocalFile(filepath) {
     const fs = require('fs')
@@ -70,29 +73,6 @@ class Main extends React.PureComponent {
   }
   bilibiliDanmakuLoad(file) {
     this.danmakuLoad(BilibiliParser(this.loadLocalFile(file)));
-  }
-  danmakuLoad(file) {
-    var danmaku = new Danmaku();
-    this.pool = file;
-    var comments = file;
-    console.log(comments)
-    danmaku.init({
-      container: document.getElementById('danmaku'),
-      comments: []
-    });
-
-    let dispatcher = setInterval(() => {
-      var t = document.getElementById("progress").value
-      const result = comments.filter(word => word.time < t);
-
-      // 差集 （减去发送的弹幕）
-      comments = comments.filter(v => result.indexOf(v) == -1 )
-
-      //console.log(result)
-      result.map(r => danmaku.emit(r));
-
-    }, 1000);
-    this.danmaku = { engine: danmaku, pool: file, dispatcher: dispatcher }
   }
   handleKeyDown(e) {
     e.preventDefault();
@@ -128,6 +108,9 @@ class Main extends React.PureComponent {
   }
   togglePause(e) {
     e.target.blur();
+
+    this.engines.map(engine => engine.play())
+
     if (!this.state.duration) return;
     this.mpv.property("pause", !this.state.pause);
   }
@@ -143,27 +126,7 @@ class Main extends React.PureComponent {
   handleSeek(e) {
     e.target.blur();
 
-    // danmaku
-    clearInterval(this.danmaku.dispatcher)
-
-    let danmaku = this.danmaku.engine
-
-    var t = document.getElementById("progress").value
-    let comments = this.danmaku.pool.filter(word => word.time >= t)
-    console.log(comments)
-
-    this.danmaku.dispatcher = setInterval(() => {
-      var t = document.getElementById("progress").value
-      const result = comments.filter(word => word.time < t);
-
-      // 差集 （减去发送的弹幕）
-      comments = comments.filter(v => result.indexOf(v) == -1 )
-
-      //console.log(result)
-      result.map(r => danmaku.emit(r));
-
-    }, 1000);
-    ///////////////
+    this.engines.map(engine => engine.seek())
 
     const timePos = +e.target.value;
     this.setState({"time-pos": timePos});
@@ -193,14 +156,9 @@ class Main extends React.PureComponent {
 
       console.log(items[0])
 
-      const filepath = items[0];
-      ACPlayer.search(filepath, (ok, matches) => {
-        console.log(matches)
-        ACPlayer.getComments(matches[0].episodeId, (comments) => {
-          //console.log(comments)
-          this.danmakuLoad(ACPlayer.Parser(comments));
-        });
-      });
+      this.engines.push(new DanmakuDOM())
+      console.log(this.engines)
+      this.engines.map(engine => engine.loading(items[0]))
 
       this.mpv.command("loadfile", items[0]);
     }
