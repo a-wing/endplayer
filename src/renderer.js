@@ -109,7 +109,7 @@ class Main extends React.PureComponent {
   togglePause(e) {
     e.target.blur();
 
-    this.engines.map(engine => engine.play())
+    this.state.pause ? this.engines.map(engine => engine.play()) : this.engines.map(engine => engine.pause())
 
     if (!this.state.duration) return;
     this.mpv.property("pause", !this.state.pause);
