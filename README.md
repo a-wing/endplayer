@@ -1,7 +1,7 @@
 Endplayer
 =====
 
-> Electron N Danmaku Player
+> Electron Native Danmaku Player
 
 ![Endplayer](screenshot/endplayer.png)
 
@@ -9,7 +9,7 @@ Endplayer
 
 ## Todo
 - [ ] Plugin System
-  - [ ] Plugin: Auto Search danmaku
+  - [x] Plugin: Auto Search danmaku
   - [ ] Plugin: Bilibili danmaku
   - [x] Plugin: DandanPlayer API
   - [ ] Plugin: Send Danmaku
@@ -27,6 +27,8 @@ npm install
 npm run use-system-ffmpeg
 
 # Run
+npx tsc
+npm run build
 npm run start
 ```
 

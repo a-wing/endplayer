@@ -1,14 +1,12 @@
-//console.log(process.argv[2])
 
-//const filepath = process.argv[2];
-const fs = require('fs');
 const path = require('path');
-
-//const http = require('http');
+const fs = require('fs');
 const https = require('https');
 
 const crypto = require('crypto');
 const hash = crypto.createHash('md5');
+
+export default class ACPlayer {
 
 /**
 * fileHash (string, optional): 文件前16MB (16x1024x1024 Byte) 数据的32位MD5结果，不区分大小写。
@@ -19,9 +17,9 @@ const hash = crypto.createHash('md5');
 * @returns {callback<typeof string>}
 */
 
-function getHash(filepath, callback) {
+static getHash(filepath, callback) {
 
-	// 16*1024*1024 == 16777216
+  // 16*1024*1024 == 16777216
   const input = fs.createReadStream(filepath, { start: 0, end: 16777215 });
   input.on('readable', () => {
     // Only one element is going to be produced by the
@@ -40,8 +38,8 @@ function getHash(filepath, callback) {
 * @param {string} filepath
 * @returns {callback<typeof string>}
 */
-function search(filepath, callback) {
-  getHash(filepath, (hash) => {
+static search(filepath, callback) {
+  this.getHash(filepath, (hash) => {
     //  console.log(hash)
 
     const postData = JSON.stringify({
@@ -52,7 +50,7 @@ function search(filepath, callback) {
       // matchMode (string): ['hashAndFileName', 'fileNameOnly', 'hashOnly']
       "matchMode": "hashOnly"
     });
-    match(postData, (data) => {
+    this.match(postData, (data) => {
       callback(JSON.parse(data).isMatched, JSON.parse(data).matches);
     });
 
@@ -64,7 +62,7 @@ function search(filepath, callback) {
 * @param {string} postData
 * @returns {callback<typeof string>}
 */
-function match(postData, callback) {
+static match(postData, callback) {
   const options = {
     hostname: 'api.acplay.net',
     port: 443,
@@ -102,20 +100,22 @@ function match(postData, callback) {
 }
 
 
+
+
 /**
-* @see https://api.acplay.net/swagger/ui/index#!/Comment/Comment_GetAsync
-* @param {string} id
-* @returns {callback<typeof string>}
-*/
-function getComments(id, callback) {
-  httpGet(`https://api.acplay.net/api/v2/comment/${id}?withRelated=false`, callback)
+ * @see https://api.acplay.net/swagger/ui/index#!/Comment/Comment_GetAsync
+ * @param {string} id
+ * @returns {callback<typeof string>}
+ */
+static getComments(id, callback) {
+  this.httpGet(`https://api.acplay.net/api/v2/comment/${id}?withRelated=false`, callback)
 }
 
-function httpGet(url, callback) {
+static httpGet(url, callback) {
   https.get(url, (res) => {
     console.log('statusCode:', res.statusCode);
     console.log('headers:', res.headers);
-    data = '';
+    let data = '';
 
     res.on('data', (d) => {
       //process.stdout.write(d);
@@ -128,7 +128,7 @@ function httpGet(url, callback) {
       console.log(res.headers);
       if (res.statusCode == 302 || res.statusCode == 302) {
         console.log("301 || 302");
-        return httpGet(res.headers.location, callback);
+        return this.httpGet(res.headers.location, callback);
       }
       callback(data);
     });
@@ -139,14 +139,37 @@ function httpGet(url, callback) {
 
 }
 
-//search(filepath, (ok, matches) => {
-//  console.log(matches)
-//  getComments(matches[0].episodeId, (comments) => {
-//    //console.log(comments)
-//    //console.log(acplayerParser(row));
-//    console.log(acplayerParser(comments));
-//  });
-//});
+
+
+static Parser(row) {
+  let modeMap = {
+    1: 'rtl',
+    4: 'bottom',
+    5: 'top',
+    6: 'ltr',
+  };
+
+  let data = JSON.parse(row).comments.map(d => {
+    return {
+      text: d.m,
+      html: false,
+      mode: modeMap[d.p.split(',')[1]],
+      time: Number(d.p.split(',')[0]),
+      style: {
+        fontSize: '20px',
+        color: `#${Number(d.p.split(',')[2]).toString(16)}`,
+        border: '',
+        textShadow: '-1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000'
+      }
+    }
+  })
+
+  return data;
+}
+
+
+
+}
 
 
 /**
@@ -166,7 +189,8 @@ function httpGet(url, callback) {
 * 用户ID：字符串形式表示的用户ID，通常为数字，不会包含特殊字符
 */
 
-row = `{
+
+const row = `{
   "count": 0,
   "comments": [
     {
@@ -182,36 +206,4 @@ row = `{
   ]
 }`
 
-
-function Parser(row) {
-  modeMap = {
-    1: 'rtl',
-    4: 'bottom',
-    5: 'top',
-    6: 'ltr',
-  };
-
-  data = JSON.parse(row).comments.map(d => {
-    return {
-      text: d.m,
-      html: false,
-      mode: modeMap[d.p.split(',')[1]],
-      time: Number(d.p.split(',')[0]),
-      style: {
-        fontSize: '20px',
-        color: `#${Number(d.p.split(',')[2]).toString(16)}`,
-        border: '',
-        textShadow: '-1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000'
-      }
-    }
-  })
-
-  return data;
-}
-
-module.exports = {
-  search,
-  getComments,
-  Parser
-}
 

@@ -9,7 +9,8 @@ const { ReactMPV } = require("mpv.js");
 // danmaku
 import Danmaku from "danmaku";
 
-import DanmakuDOM from "./engines/danmaku_dom";
+//import DanmakuDOM from "./engines/danmaku_dom";
+import DanmakuDOM from "./tsc/engines/danmaku_dom";
 
 const BilibiliParser = require('./plugins/bilibili')
 
@@ -156,9 +157,9 @@ class Main extends React.PureComponent {
 
       console.log(items[0])
 
-      this.engines.push(new DanmakuDOM())
+      this.engines.push(new DanmakuDOM(() => {return document.getElementById("progress").value}))
       console.log(this.engines)
-      this.engines.map(engine => engine.loading(items[0]))
+      this.engines.map(engine => engine.loader(items[0]))
 
       this.mpv.command("loadfile", items[0]);
     }

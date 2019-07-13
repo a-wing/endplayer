@@ -19,6 +19,7 @@
     "babel-loader": "^8.0.6",
     "concurrently": "^4.1.1",
     "electron": "^4.1.5",
+    "typescript": "^3.5.3",
     "webpack": "^5.0.0-alpha.17",
     "webpack-cli": "^3.3.5"
   },

@@ -1,30 +1,23 @@
 import Danmaku from "danmaku";
 
-//const ACPlayer = require('../plugins/acplayer')
+import Engine from '../cores/engine';
 import ACPlayer from "../plugins/acplayer";
 
-// [
-//  init
-//  loading
-//  play
-//  pause
-//  seek
-//  resize
-// ]
-
-export default class DanmakuDOM {
-  constructor() {
+export default class DanmakuDOM extends Engine {
+  constructor(time: () => number) {
+    super()
     this.engine = (new Danmaku()).init({
       container: document.getElementById('danmaku'),
       comments: []
     })
     this.pool = []
     this.dispatcher = {}
+    this.time = time
 
     this.play = this.play.bind(this)
     this.seek = this.seek.bind(this)
   }
-  loading(path) {
+  loader(path) {
     ACPlayer.search(path, (ok, matches) => {
       //console.log(matches)
       ACPlayer.getComments(matches[0].episodeId, (comments) => {
@@ -35,8 +28,9 @@ export default class DanmakuDOM {
   }
   private_load(comments = this.pool) {
     this.dispatcher = setInterval(() => {
-      var t = document.getElementById("progress").value
-      const result = comments.filter(word => word.time < t);
+      //var t = document.getElementById("progress").value
+      let time = this.time()
+      const result = comments.filter(word => word.time < time);
 
       // 差集 （减去发送的弹幕）
       comments = comments.filter(v => result.indexOf(v) == -1 )
@@ -48,13 +42,15 @@ export default class DanmakuDOM {
   }
   play() {
     this.private_load();
+    return true;
   }
   pause() {}
   seek() {
     clearInterval(this.dispatcher)
 
-    var t = document.getElementById("progress").value
-    let comments = this.pool.filter(word => word.time >= t)
+    //var t = document.getElementById("progress").value
+    let time = this.time()
+    let comments = this.pool.filter(word => word.time >= time)
     //console.log(comments)
 
     this.private_load(comments);
