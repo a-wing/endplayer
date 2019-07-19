@@ -6,13 +6,13 @@ const ReactDOM = require("react-dom");
 const { remote } = require("electron");
 const { ReactMPV } = require("mpv.js");
 
-// danmaku
-import Danmaku from "danmaku";
-
 //import DanmakuDOM from "./engines/danmaku_dom";
+import Vvideo from "./tsc/engines/vvideo";
+import Ass from "./tsc/engines/subtitle_ass";
 import DanmakuDOM from "./tsc/engines/danmaku_dom";
 
 const BilibiliParser = require('./plugins/bilibili')
+const fs = require('fs');
 
 console.log(BilibiliParser)
 
@@ -34,10 +34,12 @@ class Main extends React.PureComponent {
 
 
     this.engines = [];
+    this.timer = null;
     // danmaku
     this.danmaku = null;
     this.onWindowResize = this.onWindowResize.bind(this);
     this.handleDanmakuLoad = this.handleDanmakuLoad.bind(this);
+    this.handleSubtitleLoad = this.handleSubtitleLoad.bind(this);
     this.loadLocalFile = this.loadLocalFile.bind(this);
     this.handleMouse = this.handleMouse.bind(this);
     this.state = { cursor: 'none' };
@@ -117,6 +119,7 @@ class Main extends React.PureComponent {
   }
   handleStop(e) {
     e.target.blur();
+    this.engines.map(engine => engine.seek())
     this.mpv.property("pause", true);
     this.mpv.command("stop");
     this.setState({"time-pos": 0, duration: 0});
@@ -135,6 +138,30 @@ class Main extends React.PureComponent {
   }
   handleSeekMouseUp() {
     this.seeking = false;
+  }
+  handleSubtitleLoad(e) {
+    e.target.blur();
+    const items = remote.dialog.showOpenDialog({filters: [
+      {name: "ASS", extensions: ["ass"]},
+      {name: "All files", extensions: ["*"]},
+    ]});
+
+    if (items) {
+      console.log(items)
+      //this.bilibiliDanmakuLoad(items[0]);
+    fs.readFile(items[0], (err, file) => {
+      if (err) {
+        return alert(err)
+      }
+      console.log(file)
+
+      //this.engines.map(engine => engine.loader(file))
+      this.engines[1].loader(file)
+
+      //return file
+    })
+
+    }
   }
   handleDanmakuLoad(e) {
     e.target.blur();
@@ -157,9 +184,17 @@ class Main extends React.PureComponent {
 
       console.log(items[0])
 
-      this.engines.push(new DanmakuDOM(() => {return document.getElementById("progress").value}))
+      let video = document.getElementById('ipc-video')
+      video.currentTime = 0
+
+      this.engines.push(new Vvideo(video))
+      this.engines.push(new Ass(video))
+      this.engines.push(new DanmakuDOM(video))
       console.log(this.engines)
-      this.engines.map(engine => engine.loader(items[0]))
+      //this.engines.map(engine => engine.loader(items[0]))
+      this.engines[2].loader(items[0])
+
+      console.log(document.getElementById('progress').value)
 
       this.mpv.command("loadfile", items[0]);
     }
@@ -167,7 +202,9 @@ class Main extends React.PureComponent {
   render() {
     return (
       <div className="container" style={{ cursor: this.state.cursor }} onMouseMove={ this.handleMouse }>
+        <div id="ipc-video"></div>
         <div id="danmaku"></div>
+        <div id="ass"></div>
         <ReactMPV
           className="player"
           onReady={this.handleMPVReady}
@@ -188,12 +225,14 @@ class Main extends React.PureComponent {
             step={0.1}
             max={this.state.duration}
             value={this.state["time-pos"]}
+            currenttime={this.state["time-pos"]}
             onChange={this.handleSeek}
             onMouseDown={this.handleSeekMouseDown}
             onMouseUp={this.handleSeekMouseUp}
           />
           <button className="control" onClick={this.handleLoad}>⏏</button>
           <button className="control" onClick={this.handleDanmakuLoad}>弹</button>
+          <button className="control" onClick={this.handleSubtitleLoad}>字</button>
           <button className="control" onClick={this.toggleFullscreen}>{ this.state.fullscreen ? "Esc" : "Full" }</button>
         </div>
       </div>

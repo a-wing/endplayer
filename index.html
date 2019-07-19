@@ -23,7 +23,7 @@ html, body, #main {
   position: fixed;
 }
 
-#danmaku {
+#ass, #danmaku, #ipc-video {
   top: 0;
   left: 0;
   right: 0;
@@ -32,6 +32,19 @@ html, body, #main {
   width: 100%;
   height: 100%;
   position: fixed;
+}
+
+#ass {
+  z-index: -9;
+}
+
+#danmaku {
+  z-index: -10;
+}
+
+
+#ipc-video {
+  z-index: -11;
 }
 
 .controls {

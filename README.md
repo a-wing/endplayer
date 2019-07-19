@@ -27,7 +27,6 @@ npm install
 npm run use-system-ffmpeg
 
 # Run
-npx tsc
 npm run build
 npm run start
 ```
@@ -47,4 +46,5 @@ https://api.bilibili.com/x/v1/dm/list.so?oid=87404714
 ## Acknowledgement
 - [Kagami/mpv.js](https://github.com/Kagami/mpv.js)
 - [weizhenye/Danmaku](https://github.com/weizhenye/Danmaku)
+- [weizhenye/ASS](https://github.com/weizhenye/ASS)
 

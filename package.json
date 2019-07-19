@@ -8,9 +8,9 @@
   "scripts": {
     "use-system-ffmpeg": "gcc -Wl,--no-as-needed -shared -lavformat -o node_modules/electron/dist/libffmpeg.so",
     "start": "npx electron .",
-    "build": "webpack --mode production --config webpack.config.renderer.js",
+    "build": "tsc && webpack --mode production --config webpack.config.renderer.js",
     "dev-renderer": "webpack --watch --mode development --config webpack.config.renderer.js",
-    "dev": "concurrently --kill-others 'npm run dev-renderer' 'npm run start'"
+    "dev": "concurrently --kill-others 'npx tsc -w' 'npm run dev-renderer' 'npm run start'"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",
@@ -24,6 +24,7 @@
     "webpack-cli": "^3.3.5"
   },
   "dependencies": {
+    "assjs": "git+https://github.com/a-wing/ass.git",
     "danmaku": "^1.3.5",
     "mpv.js": "^0.3.0",
     "react": "^16.8.6",
