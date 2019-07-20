@@ -29,7 +29,7 @@ import Engine from '../cores/engine';
 export default class SubtitleAss extends Engine {
   constructor(video: any) {
     super()
-    this.engine = {}
+    //this.engine = {}
 
     //this.dispatcher = {}
     //let video = document.createElement('div');
@@ -51,7 +51,7 @@ export default class SubtitleAss extends Engine {
     })
   }
   resize() {
-    this.engine.resize();
+    this.engine ? this.engine.resize() : null;
   }
 }
 
