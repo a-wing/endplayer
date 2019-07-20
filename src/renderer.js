@@ -8,7 +8,9 @@ const { ReactMPV } = require("mpv.js");
 
 import { Vvideo, DanmakuDOM, Ass } from "./tsc/engines/engine";
 
-const BilibiliParser = require('./plugins/bilibili')
+//const BilibiliParser = require('./tsc/plugins/bilibili')
+import BilibiliParser from "./plugins/bilibili";
+
 const fs = require('fs');
 
 console.log(BilibiliParser)
@@ -72,7 +74,10 @@ class Main extends React.PureComponent {
     this.timer = window.setTimeout(() => { this.setState({ cursor: 'none' }); }, 3000)
   }
   bilibiliDanmakuLoad(file) {
-    this.danmakuLoad(BilibiliParser(this.loadLocalFile(file)));
+    //this.danmakuLoad(BilibiliParser(this.loadLocalFile(file)));
+    console.log(file)
+    console.log(this.engines[2])
+    this.engines[2].loadFile(BilibiliParser(this.loadLocalFile(file)));
   }
   handleKeyDown(e) {
     e.preventDefault();

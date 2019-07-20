@@ -50,6 +50,9 @@ export default class DanmakuDOM extends Engine {
       });
     });
   }
+  loadFile(file) {
+    file.map(r => this.engine.emit(r));
+  }
   resize() {
     this.engine.resize();
   }

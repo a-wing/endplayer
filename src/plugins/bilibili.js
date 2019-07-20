@@ -1,4 +1,4 @@
-module.exports = function BilibiliParser(xmlDoc, engine) {
+export default function BilibiliParser(xmlDoc, engine) {
   var elements = xmlDoc.getElementsByTagName('d');
   var comments = [];
   for (var i = elements.length - 1; i >= 0; i--) {
