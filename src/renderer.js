@@ -6,10 +6,7 @@ const ReactDOM = require("react-dom");
 const { remote } = require("electron");
 const { ReactMPV } = require("mpv.js");
 
-//import DanmakuDOM from "./engines/danmaku_dom";
-import Vvideo from "./tsc/engines/vvideo";
-import Ass from "./tsc/engines/subtitle_ass";
-import DanmakuDOM from "./tsc/engines/danmaku_dom";
+import { Vvideo, DanmakuDOM, Ass } from "./tsc/engines/engine";
 
 const BilibiliParser = require('./plugins/bilibili')
 const fs = require('fs');
