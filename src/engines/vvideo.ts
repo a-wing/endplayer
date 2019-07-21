@@ -54,6 +54,12 @@ export default class Vvideo extends Engine {
     this.engine.dispatchEvent(event);
   }
   seek() {
+
+    // this.engine.currentTime Sync time is 100
+    // get currentTime is onseeking before currentTime
+    // Need Sync onseeking after currentTime
+    this.engine.currentTime = document.getElementById('progress').value
+
     let event = document.createEvent('Event');
     event.initEvent('seeking', true, true);
 
