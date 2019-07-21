@@ -13,15 +13,15 @@
     "dev": "concurrently --kill-others 'npx tsc -w' 'npm run dev-renderer' 'npm run start'"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.4",
-    "@babel/preset-env": "^7.5.4",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
     "concurrently": "^4.1.1",
-    "electron": "^4.1.5",
+    "electron": "^4.2.8",
     "typescript": "^3.5.3",
     "webpack": "^5.0.0-alpha.18",
-    "webpack-cli": "^3.3.5"
+    "webpack-cli": "^3.3.6"
   },
   "dependencies": {
     "assjs": "git+https://github.com/a-wing/ass.git",
