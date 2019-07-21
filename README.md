@@ -8,13 +8,20 @@ Endplayer
 > Use Electron, React, mpv, danmaku player
 
 ## Todo
-- [ ] Plugin System
-  - [x] Plugin: Auto Search danmaku
-  - [ ] Plugin: Bilibili danmaku
-  - [x] Plugin: DandanPlayer API
-  - [ ] Plugin: Send Danmaku
+- [ ] Engine && Loder System
+  - [x] Engine: Danmaku
+    - [x] Loader: Auto Search ACplayer(dandanplayer API) danmaku
+    - [x] Loader: handle Bilibili danmaku
+    - [ ] Plugin: Send Danmaku
+    - [ ] Danmaku Filter
+  - [x] Engine: Subtitle
+    - [x] Loader: handleSubtitleLoad Subtitle ass
+    - [ ] Loader: Auto Search SubtitleLoad
 - [ ] Play List
-- [ ] Danmaku Filter
+- [ ] Socket control API (Maybe http RESTful Or RPC)
+- [ ] Shortcut key support
+- [ ] Debug display log
+- [ ] UI blur support
 
 ## Depends
 - mpv
