@@ -34,6 +34,7 @@ class Main extends React.PureComponent {
 
     this.engines = [];
     this.timer = null;
+    this.fileName = "";
     // danmaku
     this.danmaku = null;
     this.onWindowResize = this.onWindowResize.bind(this);
@@ -185,6 +186,7 @@ class Main extends React.PureComponent {
     if (items) {
 
       console.log(items[0])
+      this.fileName = items[0];
 
       let video = document.getElementById('ipc-video')
       video.currentTime = 0
@@ -203,7 +205,7 @@ class Main extends React.PureComponent {
   }
   render() {
     return (
-      <div className="container" style={{ cursor: this.state.cursor }} onMouseMove={ this.handleMouse }>
+      <endplayer-container style={{ cursor: this.state.cursor }} onMouseMove={ this.handleMouse }>
         <div id="ipc-video"></div>
         <div id="danmaku"></div>
         <div id="ass"></div>
@@ -214,12 +216,18 @@ class Main extends React.PureComponent {
           onMouseDown={this.togglePause}
         />
 
-        <div className="controls">
-          <button className="control" onClick={this.togglePause}>
-            {this.state.pause ? "▶" : "❚❚"}
-          </button>
-          <button className="control" onClick={this.handleStop}>■</button>
-          <input
+      <endplayer-title>
+        <endplayer-title-text>
+          { this.fileName }
+        </endplayer-title-text>
+      </endplayer-title>
+
+
+        <endplayer-control className="controls">
+
+
+      <endplayer-progress>
+           <input
             id="progress"
             className="seek"
             type="range"
@@ -227,17 +235,38 @@ class Main extends React.PureComponent {
             step={0.1}
             max={this.state.duration}
             value={this.state["time-pos"]}
-            currenttime={this.state["time-pos"]}
             onChange={this.handleSeek}
             onMouseDown={this.handleSeekMouseDown}
             onMouseUp={this.handleSeekMouseUp}
           />
-          <button className="control" onClick={this.handleLoad}>⏏</button>
-          <button className="control" onClick={this.handleDanmakuLoad}>弹</button>
-          <button className="control" onClick={this.handleSubtitleLoad}>字</button>
-          <button className="control" onClick={this.toggleFullscreen}>{ this.state.fullscreen ? "Esc" : "Full" }</button>
-        </div>
-      </div>
+        </endplayer-progress>
+        <endplayer-controls-tray>
+          <endplayer-button-group>
+            <button onClick={this.togglePause}>
+              <img src={this.state.pause ? "./assets/play.svg" : "./assets/pause.svg"} />
+            </button>
+              <endplayer-controls-time>{ parseInt(this.state["time-pos"]) }/{ parseInt(this.state.duration) }</endplayer-controls-time>
+          </endplayer-button-group>
+          <endplayer-button-group>
+            <button onClick={this.handleLoad}>
+              <img src="./assets/open.svg" />
+            </button>
+            <button onClick={this.handleDanmakuLoad}>
+              <img src="./assets/danmaku.svg" />
+            </button>
+            <button onClick={this.handleSubtitleLoad}>
+              <img src="./assets/subtract.svg" />
+            </button>
+            <button onClick={this.toggleFullscreen}>
+              <img src={this.state.fullscreen ? "./assets/window.svg" : "./assets/full.svg"} />
+            </button>
+
+          </endplayer-button-group>
+        </endplayer-controls-tray>
+
+
+        </endplayer-control>
+      </endplayer-container>
     );
   }
 }

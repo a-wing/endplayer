@@ -1,0 +1,146 @@
+
+endplayer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+endplayer-title {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4));
+  opacity: 0;
+  transition: opacity 1s linear;
+}
+
+endplayer-title:hover {
+  opacity: 1;
+}
+
+endplayer-title endplayer-title-text {
+  margin: 5px 10px;
+  font-size: 18px;
+
+  background: linear-gradient(rgb(100, 156, 255), rgb(214, 102, 251));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+endplayer-control {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+
+  opacity: 0;
+  transition: opacity 1s linear;
+
+  width: 100%;
+  height: 70px;
+
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
+}
+
+endplayer-control:hover {
+  opacity: 1;
+}
+
+endplayer-controls-tray {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+endplayer-controls-time {
+  background: linear-gradient(rgb(100, 156, 255), rgb(214, 102, 251));
+  -webkit-background-clip: text;
+  color: transparent;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+endplayer-button-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+endplayer-button-group button {
+  cursor: pointer;
+  border-radius: 8px;
+  border: 2px solid rgba(0, 0, 0, 0);
+  background: none;
+  margin: 2px 3px;
+}
+
+endplayer-button-group button:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+endplayer-button-group button:active {
+  border: 2px solid rgb(100, 156, 255);
+  transition: border 0.1s;
+}
+
+endplayer-button-group button img {
+  width: 32px;
+  height: 32px;
+}
+
+
+/* Progress */
+/*
+ * https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/
+ * */
+
+endplayer-progress {
+  height: 10px;
+  width: 98%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+endplayer-progress input[type="range"] {
+  -webkit-appearance: none;
+  overflow: hidden;
+  outline : none;
+  background: none;
+}
+
+endplayer-progress input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid #000000;
+  height: 36px;
+  width: 16px;
+  border-radius: 5px;
+  background: rgb(214, 102, 251);
+  cursor: pointer;
+  margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+  transition: background 0.2s;
+}
+
+endplayer-progress input[type="range"]::-webkit-slider-thumb:hover {
+  background: rgb(0, 0, 0, 0.4);
+}
+
+endplayer-progress input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 3px;
+  cursor: pointer;
+  background: linear-gradient(to right,rgb(98,239,171,0.4) 5%,rgb(242,234,125,0.4) 15%,rgb(242,234,125,0.4) 25%,rgb(255,135,151,0.4) 35%,rgb(255,135,151,0.4) 45%,rgb(225,164,244,0.4) 55%,rgb(225,164,244,0.4) 65%,rgb(130,255,244,0.4) 75%,rgb(130,255,244,0.4) 85%,rgb(98,239,171,0.4) 95%);
+  border-radius: 3px;
+  transition: height 0.2s;
+}
+
+endplayer-progress input[type=range]::-webkit-slider-runnable-track:hover {
+  height: 10px;
+  border-radius: 5px;
+}
+
