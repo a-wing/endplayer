@@ -21,7 +21,7 @@ Endplayer
 - [ ] Socket control API (Maybe http RESTful Or RPC)
 - [ ] Shortcut key support
 - [ ] Debug display log
-- [ ] UI blur support
+- [x] ~~UI blur support~~ Refactor UI
 
 ## Depends
 - mpv
