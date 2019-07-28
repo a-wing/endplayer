@@ -24,7 +24,7 @@
     "webpack-cli": "^3.3.6"
   },
   "dependencies": {
-    "assjs": "git+https://github.com/a-wing/ass.git",
+    "assjs": "0.0.10",
     "danmaku": "^1.3.5",
     "mpv.js": "^0.3.0",
     "react": "^16.8.6",
