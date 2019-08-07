@@ -3,7 +3,7 @@ Endplayer
 
 > Electron Native Danmaku Player
 
-![Endplayer](screenshot/endplayer.png)
+![Endplayer](https://raw.githubusercontent.com/a-wing/endplayer/gh-pages/screenshot/endplayer.png)
 
 > Use Electron, React, mpv, danmaku player
 
