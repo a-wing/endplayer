@@ -20,7 +20,7 @@ Endplayer
 - [ ] Play List
 - [ ] Socket control API (Maybe http RESTful Or RPC)
 - [ ] Shortcut key support
-- [ ] Debug display log
+- [x] Debug display log
 - [x] ~~UI blur support~~ Refactor UI
 
 ## Depends

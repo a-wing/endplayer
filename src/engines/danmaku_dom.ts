@@ -3,6 +3,8 @@ import Danmaku from "danmaku";
 import Engine from '../cores/engine';
 import ACPlayer from "../plugins/acplayer";
 
+import Log from "../cores/log";
+
 /**
 * HTMLVideoElement
 *
@@ -41,12 +43,11 @@ export default class DanmakuDOM extends Engine {
   }
   loader(path) {
     ACPlayer.search(path, (ok, matches) => {
-      //console.log(matches)
       ACPlayer.getComments(matches[0].episodeId, (comments) => {
         this.dispatcher = ACPlayer.Parser(comments);
 
         this.dispatcher.map(r => this.engine.emit(r));
-        console.log(this.dispatcher)
+        Log.println("ACPlayer Load danmaku: " + this.dispatcher.length)
       });
     });
   }

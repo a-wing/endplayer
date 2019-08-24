@@ -17,7 +17,15 @@ html, body, #main {
   position: fixed;
 }
 
-#ass, #danmaku, #ipc-video {
+.debug {
+  font-size: 24px;
+  font-weight: 800;
+  background: linear-gradient(rgb(100, 156, 255), rgb(214, 102, 251));
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+#status, #ass, #danmaku, #ipc-video {
   top: 0;
   left: 0;
   right: 0;
@@ -26,6 +34,10 @@ html, body, #main {
   width: 100%;
   height: 100%;
   position: fixed;
+}
+
+#status {
+  z-index: -8;
 }
 
 #ass {

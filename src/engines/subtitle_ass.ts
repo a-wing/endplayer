@@ -1,8 +1,9 @@
 import ASS from "assjs";
 
 import Engine from '../cores/engine';
-//import ACPlayer from "../plugins/acplayer";
+import Log from "../cores/log";
 
+import * as fs from 'fs';
 
 /**
 * HTMLVideoElement
@@ -45,9 +46,19 @@ export default class SubtitleAss extends Engine {
     this.loader = this.loader.bind(this)
   }
   loader(path) {
-   this.engine = new ASS(path.toString(), this.dispatcher, {
-      container: document.getElementById('ass'),
-      resampling: 'video_width'
+    Log.println("Subtitle Load Ass: " + path)
+
+    fs.readFile(path, (err, file) => {
+      //if (err) throw err;
+      if (err) {
+        Log.println("Subtitle ERROR: " + err.message)
+      }
+
+      this.engine = new ASS(file.toString(), this.dispatcher, {
+        container: document.getElementById('ass'),
+        resampling: 'video_width'
+      })
+
     })
   }
   resize() {

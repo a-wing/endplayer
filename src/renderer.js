@@ -6,14 +6,12 @@ const ReactDOM = require("react-dom");
 const { remote } = require("electron");
 const { ReactMPV } = require("mpv.js");
 
-import { Vvideo, DanmakuDOM, Ass } from "./tsc/engines/engine";
+import { Vvideo, DanmakuDOM, Ass, Status } from "./tsc/engines/engine";
+
+import Log from "./tsc/cores/log";
 
 //const BilibiliParser = require('./tsc/plugins/bilibili')
 import BilibiliParser from "./plugins/bilibili";
-
-const fs = require('fs');
-
-console.log(BilibiliParser)
 
 class Main extends React.PureComponent {
   constructor(props) {
@@ -150,20 +148,7 @@ class Main extends React.PureComponent {
     ]});
 
     if (items) {
-      console.log(items)
-      //this.bilibiliDanmakuLoad(items[0]);
-    fs.readFile(items[0], (err, file) => {
-      if (err) {
-        return alert(err)
-      }
-      console.log(file)
-
-      //this.engines.map(engine => engine.loader(file))
-      this.engines[1].loader(file)
-
-      //return file
-    })
-
+      this.engines[1].loader(items[0])
     }
   }
   handleDanmakuLoad(e) {
@@ -174,6 +159,7 @@ class Main extends React.PureComponent {
     ]});
 
     if (items) {
+      Log.println("Load Danmaku: " + items[0])
       this.bilibiliDanmakuLoad(items[0]);
     }
   }
@@ -185,7 +171,7 @@ class Main extends React.PureComponent {
     ]});
     if (items) {
 
-      console.log(items[0])
+      Log.println("Load video: " + items[0])
       this.fileName = items[0];
 
       let video = document.getElementById('ipc-video')
@@ -194,11 +180,10 @@ class Main extends React.PureComponent {
       this.engines.push(new Vvideo(video))
       this.engines.push(new Ass(video))
       this.engines.push(new DanmakuDOM(video))
+      this.engines.push(new Status(video))
       console.log(this.engines)
       //this.engines.map(engine => engine.loader(items[0]))
       this.engines[2].loader(items[0])
-
-      console.log(document.getElementById('progress').value)
 
       this.mpv.command("loadfile", items[0]);
     }
@@ -209,6 +194,7 @@ class Main extends React.PureComponent {
         <div id="ipc-video"></div>
         <div id="danmaku"></div>
         <div id="ass"></div>
+        <div id="status"></div>
         <ReactMPV
           className="player"
           onReady={this.handleMPVReady}
