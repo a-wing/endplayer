@@ -11,7 +11,7 @@ class ListItem extends React.Component {
   render() {
     return (
       <dialog ref={this.dialog} >
-        <div>select. please</div>
+        <h5>select. please</h5>
         <ul>
           {this.props.list.map((value, index) => {
             return <li onClick={() => this.props.toggleList([value])} key={index}>{value}</li>
