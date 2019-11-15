@@ -13,6 +13,11 @@ import Log from "./tsc/cores/log";
 //const BilibiliParser = require('./tsc/plugins/bilibili')
 import BilibiliParser from "./plugins/bilibili";
 
+import { Provider } from "react-redux";
+import store from "./tsc/redux/store";
+
+import OptApp from "./containers/ListSelect";
+
 class Main extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -208,6 +213,9 @@ class Main extends React.PureComponent {
         </endplayer-title-text>
       </endplayer-title>
 
+      <Provider store={store}>
+      <OptApp />
+      </Provider>
 
         <endplayer-control className="controls">
 
