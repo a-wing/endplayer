@@ -1,6 +1,6 @@
 {
   "name": "Endplayer",
-  "version": "0.2.0",
+  "version": "0.4.0",
   "description": "Electron N Danmaku Player",
   "main": "main.js",
   "author": "a-wing <1@233.email>",
