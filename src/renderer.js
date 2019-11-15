@@ -16,7 +16,8 @@ import BilibiliParser from "./plugins/bilibili";
 import { Provider } from "react-redux";
 import store from "./tsc/redux/store";
 
-import OptApp from "./containers/ListSelect";
+import ListSelect from "./containers/ListSelect";
+import ControlTray from "./containers/ControlTray";
 
 class Main extends React.PureComponent {
   constructor(props) {
@@ -145,8 +146,7 @@ class Main extends React.PureComponent {
   handleSeekMouseUp() {
     this.seeking = false;
   }
-  handleSubtitleLoad(e) {
-    e.target.blur();
+  handleSubtitleLoad() {
     const items = remote.dialog.showOpenDialog({filters: [
       {name: "ASS", extensions: ["ass"]},
       {name: "All files", extensions: ["*"]},
@@ -156,8 +156,7 @@ class Main extends React.PureComponent {
       this.engines[1].loader(items[0])
     }
   }
-  handleDanmakuLoad(e) {
-    e.target.blur();
+  handleDanmakuLoad() {
     const items = remote.dialog.showOpenDialog({filters: [
       {name: "Danmaku", extensions: ["xml"]},
       {name: "All files", extensions: ["*"]},
@@ -168,8 +167,19 @@ class Main extends React.PureComponent {
       this.bilibiliDanmakuLoad(items[0]);
     }
   }
-  handleLoad(e) {
-    e.target.blur();
+  //handleLoad(e) {
+  //  e.target.blur();
+  handleLoad(filetype) {
+    // filetypes = ["MPV#file", "Danmaku#bilibili", "Subtitle#ass"]
+    if (filetype == "Danmaku#bilibili") {
+      this.handleDanmakuLoad()
+    } else if (filetype == "Subtitle#ass") {
+      this.handleSubtitleLoad()
+    } else {
+      this.handleFileLoad()
+    }
+  }
+  handleFileLoad() {
     const items = remote.dialog.showOpenDialog({filters: [
       {name: "Videos", extensions: ["mkv", "webm", "mp4", "mov", "avi"]},
       {name: "All files", extensions: ["*"]},
@@ -214,8 +224,7 @@ class Main extends React.PureComponent {
       </endplayer-title>
 
       <Provider store={store}>
-      <OptApp />
-      </Provider>
+      <ListSelect />
 
         <endplayer-control className="controls">
 
@@ -234,32 +243,10 @@ class Main extends React.PureComponent {
             onMouseUp={this.handleSeekMouseUp}
           />
         </endplayer-progress>
-        <endplayer-controls-tray>
-          <endplayer-button-group>
-            <button onClick={this.togglePause}>
-              <img src={this.state.pause ? "./assets/play.svg" : "./assets/pause.svg"} />
-            </button>
-              <endplayer-controls-time>{ parseInt(this.state["time-pos"]) }/{ parseInt(this.state.duration) }</endplayer-controls-time>
-          </endplayer-button-group>
-          <endplayer-button-group>
-            <button onClick={this.handleLoad}>
-              <img src="./assets/open.svg" />
-            </button>
-            <button onClick={this.handleDanmakuLoad}>
-              <img src="./assets/danmaku.svg" />
-            </button>
-            <button onClick={this.handleSubtitleLoad}>
-              <img src="./assets/subtract.svg" />
-            </button>
-            <button onClick={this.toggleFullscreen}>
-              <img src={this.state.fullscreen ? "./assets/window.svg" : "./assets/full.svg"} />
-            </button>
 
-          </endplayer-button-group>
-        </endplayer-controls-tray>
-
-
+        <ControlTray loaders={["MPV#file", "Danmaku#bilibili", "Subtitle#ass"]} handleLoad={this.handleLoad} state={this.state} togglePause={this.togglePause} toggleFullscreen={this.toggleFullscreen} />
         </endplayer-control>
+      </Provider>
       </endplayer-container>
     );
   }
