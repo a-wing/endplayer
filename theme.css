@@ -1,4 +1,69 @@
 
+dialog {
+  opacity: 0.7;
+  border: 0px;
+  border-radius: 8px;
+}
+
+dialog h5 {
+  background: linear-gradient(rgb(100, 156, 255), rgb(214, 102, 251));
+  -webkit-background-clip: text;
+  color: transparent;
+  text-align: center;
+
+  font-size: 18px;
+  font-weight: 800;
+}
+
+dialog ul {
+  list-style-type: none;
+  padding: 0px
+}
+
+dialog ul li {
+  border-radius: 8px;
+  margin: 20px 2px;
+  background: linear-gradient(rgb(100, 156, 255), rgb(214, 102, 251));
+  text-align: center;
+
+  background-color: #c47135;
+  border: none;
+  color: #ffffff;
+  outline: none;
+  padding: 12px 40px 10px;
+  position: relative;
+}
+
+dialog ul li:before,
+dialog ul li:after {
+  border: 0 solid transparent;
+  transition: all 0.25s;
+  content: '';
+  height: 24px;
+  position: absolute;
+  width: 24px;
+}
+dialog ul li:before {
+  border-top: 2px solid #c47135;
+  left: 0px;
+  top: -5px;
+}
+dialog ul li:after {
+  border-bottom: 2px solid #c47135;
+  bottom: -5px;
+  right: 0px;
+}
+dialog ul li:hover {
+  background-color: #c47135;
+}
+dialog ul li:hover:before,
+dialog ul li:hover:after {
+  height: 100%;
+  width: 100%;
+}
+
+
+
 endplayer-container {
   display: flex;
   flex-direction: column;
