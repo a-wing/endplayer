@@ -1,4 +1,4 @@
-import { ADD_OPT, TOGGLE_OPT } from "./actionTypes";
+import { ADD_OPT, TOGGLE_OPT, CHANGE_SETTINGS } from "./actionTypes";
 
 export const addOpt = (content, callback) => ({
   type: ADD_OPT,
@@ -15,4 +15,15 @@ export const toggleOpt = (content, callback) => ({
     callback
   }
 });
+
+
+export const changeSettings = (content, callback) => ({
+  type: CHANGE_SETTINGS,
+  payload: {
+    content
+  }
+});
+
+
+
 

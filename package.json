@@ -7,7 +7,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "use-system-ffmpeg": "gcc -Wl,--no-as-needed -shared -lavformat -o node_modules/electron/dist/libffmpeg.so",
-    "start": "npx electron .",
+    "start": "npx electron src/tsc/main.js",
     "build": "tsc && webpack --mode production --config webpack.config.renderer.js",
     "dev-renderer": "webpack --watch --mode development --config webpack.config.renderer.js",
     "dev": "concurrently --kill-others 'npx tsc -w' 'npm run dev-renderer' 'npm run start'"
@@ -21,6 +21,7 @@
     "classnames": "^2.2.6",
     "concurrently": "^4.1.1",
     "electron": "^4.2.8",
+    "immer": "^5.0.0",
     "typescript": "^3.5.3",
     "webpack": "^5.0.0-alpha.18",
     "webpack-cli": "^3.3.6"

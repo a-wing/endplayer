@@ -1,12 +1,9 @@
-// Create at: 2019.06.04
-// Remember that my internet is broken this day.
+import * as fs from "fs";
+import * as path from "path";
+import { ipcMain, BrowserWindow, app } from "electron";
 
-
-"use strict";
-
-const path = require("path");
-const { BrowserWindow, app } = require("electron");
-const { getPluginEntry } = require("mpv.js");
+import * as Setting from "./setting";
+import { getPluginEntry } from "mpv.js";
 //require("electron-debug")({showDevTools: false});
 
 const pluginDir = path.join(path.dirname(require.resolve("mpv.js")), "build", "Release");
@@ -25,10 +22,28 @@ app.on("ready", () => {
     webPreferences: {plugins: true},
   });
   win.setMenu(null);
-  win.loadURL(`file://${__dirname}/index.html`);
-  //win.webContents.openDevTools()
+  win.loadURL(`file://${__dirname}/../../index.html`);
+  win.webContents.openDevTools()
 });
 
 app.on("window-all-closed", () => {
   app.quit();
 });
+
+ipcMain.on("setting", async (event, arg) => {
+  if (arg === "get") {
+    Setting.get().then(res => {
+
+      // if electron >= v5.0.0
+      // event.reply('setting', 'pong')
+
+      // current electron == 4.2.8  need mpv.js support
+      event.sender.send('setting', res);
+    })
+  } else {
+    Setting.set(arg).then(res => {
+      event.sender.send('setting', res);
+    })
+  }
+})
+

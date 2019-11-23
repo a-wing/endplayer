@@ -22,6 +22,7 @@ Endplayer
 - [ ] Shortcut key support
 - [x] Debug display log
 - [x] ~~UI blur support~~ Refactor UI
+- [x] Setting
 
 ## Depends
 - mpv

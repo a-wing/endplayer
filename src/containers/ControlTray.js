@@ -2,13 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import { addOpt } from "../tsc/redux/actions";
 
+import ButtonSettings from "./ButtonSettings";
+
 class ControlTray extends React.Component {
   constructor(props) {
     super(props);
   }
   handleLoad = () => {
     this.props.addOpt(this.props.loaders, opt => { this.props.handleLoad(opt); console.log(`<== DONE ${opt} DONE ==>`) });
-  };
+  }
   render() {
     return (
         <endplayer-controls-tray>
@@ -22,6 +24,7 @@ class ControlTray extends React.Component {
             <button onClick={this.handleLoad}>
               <img src="./assets/open.svg" />
             </button>
+            <ButtonSettings imgSrc="./assets/settings.svg" />
             <button onClick={this.props.toggleFullscreen}>
               <img src={this.props.state.fullscreen ? "./assets/window.svg" : "./assets/full.svg"} />
             </button>
