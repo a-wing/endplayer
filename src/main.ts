@@ -23,7 +23,7 @@ app.on("ready", () => {
   });
   win.setMenu(null);
   win.loadURL(`file://${__dirname}/../../index.html`);
-  win.webContents.openDevTools()
+  //win.webContents.openDevTools()
 });
 
 app.on("window-all-closed", () => {
@@ -41,7 +41,10 @@ ipcMain.on("setting", async (event, arg) => {
       event.sender.send('setting', res);
     })
   } else {
-    Setting.set(arg).then(res => {
+    // Save Setting
+    await Setting.set(arg)
+
+    Setting.get().then(res => {
       event.sender.send('setting', res);
     })
   }

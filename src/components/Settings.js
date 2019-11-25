@@ -20,15 +20,7 @@ class Settings extends React.Component {
   componentDidMount() {
     this.dialog.current.showModal()
   }
-  updateInput = (v) => {
-    this.setState({
-      test: v
-    });
-  }
   handleSwitch = (index, value) => {
-    console.log(index)
-    console.log(value)
-
     for (const [fKey, fValue] of Object.entries(this.state.settings)) {
       if (fKey === "engines") {
         for (const [k, v] of Object.entries(fValue)) {
@@ -52,12 +44,9 @@ class Settings extends React.Component {
   }
   handleSubmit = settings => {
     this.props.save(settings)
-    //this.props.save(this.state.settings)
-    //console.log(this.state)
   }
   handleCancel = () => {
     this.props.cancel()
-    //console.log(v)
   }
   render() {
     return (
@@ -66,11 +55,6 @@ class Settings extends React.Component {
         {Object.entries(this.state.settings).map(([key, value], index) => {
           return key === "engines" ? <EngineSettings key={index} category={value} toggleSwitch={this.handleSwitch} /> : null
         })}
-        <input
-        type="checkbox"
-        onChange={e => this.updateInput(e.target.value)}
-        value={this.state.test}
-        />test
         <br/>
         <button onClick={this.handleCancel}>
           Cancel
@@ -91,7 +75,7 @@ const EngineSettings = ({category, toggleSwitch}) => (
 const GroupSettings = ({category, group, toggleSwitch}) => (
   <label>
   {Object.entries(group).map(([key, value], index) => {
-    return <div key={index} ><input checked={value} type={(typeof value === "boolean") ? "checkbox" : "text"} onChange={e => toggleSwitch([category, key], e.target.checked)} key={index} value={value} />{key}<br/></div>
+    return <div key={index} ><input checked={value} type={(typeof value === "boolean") ? "checkbox" : "text"} onChange={e => toggleSwitch([category, key], e.target.checked)} key={index} value={value} />{category + "#" + key}<br/></div>
   })}
   </label>
 )

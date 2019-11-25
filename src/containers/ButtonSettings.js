@@ -28,10 +28,7 @@ class ButtonSettings extends React.Component {
     });
   };
   save = params => {
-    //console.log(params)
     ipcRenderer.send('setting', params)
-
-    //this.handleSettings()
   }
   cancel = () => {
     this.handleSettings()
@@ -49,7 +46,7 @@ class ButtonSettings extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return { settings: state.setting };
+  return { settings: state.settings };
 };
 
 export default connect(

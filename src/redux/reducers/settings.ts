@@ -1,6 +1,6 @@
-import { ADD_OPT, TOGGLE_OPT, CHANGE_SETTINGS } from "../actionTypes";
+import { CHANGE_SETTINGS } from "../actionTypes";
 
-const setting = (state, action) => {
+const settings = (state, action) => {
   switch (action.type) {
     case CHANGE_SETTINGS: {
       return {
@@ -15,5 +15,5 @@ const setting = (state, action) => {
   }
 };
 
-export default setting;
+export default settings;
 

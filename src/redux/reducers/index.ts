@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import setting from "./setting";
+import settings from "./settings";
 import opt from "./opt";
 
-export default combineReducers({ setting, opt });
+export default combineReducers({ settings, opt });
 
