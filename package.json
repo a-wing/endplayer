@@ -21,6 +21,7 @@
     "classnames": "^2.2.6",
     "concurrently": "^4.1.1",
     "electron": "^4.2.8",
+    "electron-devtools-installer": "^2.2.4",
     "immer": "^5.0.0",
     "typescript": "^3.5.3",
     "webpack": "^5.0.0-alpha.18",
