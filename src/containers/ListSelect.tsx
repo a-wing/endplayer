@@ -1,8 +1,8 @@
-import React from "react";
+import * as React from "react";
 import { connect } from "react-redux";
 import Opt from "../components/ListSelect";
 
-import { addOpt, toggleOpt } from "../tsc/redux/actions";
+import { addOpt, toggleOpt } from "../redux/actions";
 
 function SelectApp({opt, toggleOpt}) {
   return (

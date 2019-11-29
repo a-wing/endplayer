@@ -24,7 +24,7 @@ import BilibiliParser from "./plugins/bilibili";
 import { Provider } from "react-redux";
 import store from "./tsc/redux/store";
 
-import ListSelect from "./containers/ListSelect";
+import ListSelect from "./tsc/containers/ListSelect";
 import ControlTray from "./containers/ControlTray";
 
 class Main extends React.PureComponent {
