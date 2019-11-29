@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { addOpt } from "../tsc/redux/actions";
 
 import ButtonSettings from "./ButtonSettings";
+import TimeDigitalProgress from "../tsc/components/TimeDigitalProgress";
 
 class ControlTray extends React.Component {
   constructor(props) {
@@ -18,7 +19,9 @@ class ControlTray extends React.Component {
             <button onClick={this.props.togglePause}>
               <img src={this.props.state.pause ? "./assets/play.svg" : "./assets/pause.svg"} />
             </button>
-              <endplayer-controls-time>{ parseInt(this.props.state["time-pos"]) }/{ parseInt(this.props.state.duration) }</endplayer-controls-time>
+            <endplayer-controls-time>
+              <TimeDigitalProgress currentTime={ parseInt(this.props.state["time-pos"]) || 0 } duration={ parseInt(this.props.state.duration) || 0 } />
+            </endplayer-controls-time>
           </endplayer-button-group>
           <endplayer-button-group>
             <button onClick={this.handleLoad}>
