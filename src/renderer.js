@@ -27,6 +27,8 @@ import store from "./tsc/redux/store";
 import ListSelect from "./tsc/containers/ListSelect";
 import ControlTray from "./containers/ControlTray";
 
+import HotKey from "./tsc/hotkeys";
+
 class Main extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -232,6 +234,7 @@ class Main extends React.PureComponent {
       </endplayer-title>
 
       <Provider store={store}>
+      <HotKey loaders={["MPV#file", "Danmaku#bilibili", "Subtitle#ass"]} handleLoad={this.handleLoad} />
       <ListSelect />
 
         <endplayer-control className="controls">
