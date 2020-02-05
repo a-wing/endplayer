@@ -6,6 +6,8 @@ import * as Setting from "./setting";
 import { getPluginEntry } from "mpv.js";
 //require("electron-debug")({showDevTools: false});
 
+import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from 'electron-devtools-installer';
+
 const pluginDir = path.join(path.dirname(require.resolve("mpv.js")), "build", "Release");
 if (process.platform !== "linux") { process.chdir(pluginDir); }
 
@@ -23,8 +25,21 @@ app.on("ready", () => {
   });
   win.setMenu(null);
   win.loadURL(`file://${__dirname}/../../index.html`);
-  //win.webContents.openDevTools()
+
+  if (process.env.NODE_ENV === 'development') {
+    win.webContents.openDevTools()
+  }
 });
+
+if (process.env.NODE_ENV === 'development') {
+  app.on('ready', () => {
+    [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS].forEach(extension => {
+      installExtension(extension)
+        .then((name) => console.log(`Added Extension: ${name}`))
+        .catch((err) => console.log('An error occurred: ', err));
+    });
+  });
+}
 
 app.on("window-all-closed", () => {
   app.quit();

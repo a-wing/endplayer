@@ -6,14 +6,6 @@ const ReactDOM = require("react-dom");
 const { remote } = require("electron");
 const { ReactMPV } = require("mpv.js");
 
-
-import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
-
-installExtension(REACT_DEVELOPER_TOOLS)
-.then((name) => console.log(`Added Extension:  ${name}`))
-.catch((err) => console.log('An error occurred: ', err));
-
-
 import { Vvideo, DanmakuDOM, Ass, Status } from "./tsc/engines/engine";
 
 import Log from "./tsc/cores/log";
@@ -126,9 +118,9 @@ class Main extends React.PureComponent {
     }
     this.setState({fullscreen: !this.state.fullscreen});
   }
-  togglePause(e) {
-    e.target.blur();
-
+  //togglePause(e) {
+  //  e.target.blur();
+  togglePause() {
     this.state.pause ? this.engines.map(engine => engine.play()) : this.engines.map(engine => engine.pause())
 
     if (!this.state.duration) return;
