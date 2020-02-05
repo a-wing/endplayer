@@ -1,4 +1,4 @@
-import { ADD_OPT, TOGGLE_OPT, CHANGE_SETTINGS } from "./actionTypes";
+import { ADD_OPT, TOGGLE_OPT, CHANGE_SETTINGS, TOGGLE_PAUSE, TOGGLE_FULLSCREEN } from "./actionTypes";
 
 export const addOpt = (content, callback) => ({
   type: ADD_OPT,
@@ -25,5 +25,11 @@ export const changeSettings = (content, callback) => ({
 });
 
 
+export const onPause = (pause) => ({
+  type: TOGGLE_PAUSE,
+  payload: {
+    pause
+  }
+});
 
 

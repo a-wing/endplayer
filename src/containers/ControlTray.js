@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addOpt } from "../tsc/redux/actions";
+import { addOpt, onPause } from "../tsc/redux/actions";
 
 import ButtonSettings from "./ButtonSettings";
 import TimeDigitalProgress from "../tsc/components/TimeDigitalProgress";
@@ -12,11 +12,15 @@ class ControlTray extends React.Component {
   handleLoad = () => {
     this.props.addOpt(this.props.loaders, opt => { this.props.handleLoad(opt); console.log(`<== DONE ${opt} DONE ==>`) });
   }
+  pause = () => {
+    this.props.onPause(true)
+    this.props.togglePause()
+  }
   render() {
     return (
         <endplayer-controls-tray>
           <endplayer-button-group>
-            <button onClick={this.props.togglePause}>
+            <button onClick={this.pause}>
               <img src={this.props.state.pause ? "./assets/play.svg" : "./assets/pause.svg"} />
             </button>
             <endplayer-controls-time>
@@ -45,6 +49,6 @@ class ControlTray extends React.Component {
 
 export default connect(
   null,
-  { addOpt }
+  { addOpt, onPause }
 )(ControlTray);
 
