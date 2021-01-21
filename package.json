@@ -25,7 +25,7 @@
     "cross-env": "^7.0.0",
     "electron": "^4.2.12",
     "electron-devtools-installer": "^2.2.4",
-    "immer": "^5.3.2",
+    "immer": "^8.0.1",
     "typescript": "^3.7.5",
     "webpack": "^5.0.0-beta.13",
     "webpack-cli": "^3.3.10"
