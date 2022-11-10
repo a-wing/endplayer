@@ -23,7 +23,7 @@
     "classnames": "^2.2.6",
     "concurrently": "^4.1.2",
     "cross-env": "^7.0.0",
-    "electron": "^4.2.12",
+    "electron": "^18.3.7",
     "electron-devtools-installer": "^2.2.4",
     "immer": "^5.3.2",
     "typescript": "^3.7.5",
